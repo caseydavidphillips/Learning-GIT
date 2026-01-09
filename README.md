@@ -1,2 +1,1 @@
-# Learning-GIT
-A space to learn about using GIT
+Hello Git and GitHub
