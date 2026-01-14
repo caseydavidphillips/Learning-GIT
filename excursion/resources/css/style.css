@@ -1,0 +1,44 @@
+/* style.css — matches the mockups (black bg, centered Verdana, aquamarine links) */
+
+:root {
+  --bg: #000;
+  --text: #fff;
+  --muted: #8a8a8a;      /* gray body text */
+  --link: aquamarine;   /* link color */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Simple layout helpers */
+main {
+  width: min(900px, 92vw);
+  margin: 0 auto;
+  padding: 24px 0 64px;
+}
+
+section {
+  margin: 0 auto;
+  padding: 16px 0;
+}
+
+/* Top hero title */
+h1 {
+  margin
