@@ -4,4 +4,4 @@
 
 1. **GitHub** skills
 2. practically testing **CI/CD** pipelines.
-3. Test building and deploying websites like this one: [Excursion](/excursion/index.html)
+3. Test building and deploying websites like this one: [Excursion](https://caseydavidphillips.github.io/Learning-GIT/excursion/)
