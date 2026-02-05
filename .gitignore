@@ -1,0 +1,43 @@
+# Dependency directories
+node_modules/
+__pycache__/
+.venv/
+venv/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build and dist directories
+dist/
+build/
+*.o
+*.exe
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+.temp/
+
+# Draw.io files
+*.drawio
+*.drawio.png
+*.drawio.svg
+*.drawio.jpeg
+*.drawio.pdf
+*.drawio.xml
+*.drawio.vsdx
