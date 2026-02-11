@@ -3,6 +3,8 @@ node_modules/
 __pycache__/
 .venv/
 venv/
+env/
+ENV/
 
 # IDE and editor files
 .vscode/
@@ -10,6 +12,10 @@ venv/
 *.swp
 *.swo
 *~
+.vs/
+*.user
+*.suo
+*.VC.db
 
 # OS files
 .DS_Store
@@ -20,6 +26,18 @@ dist/
 build/
 *.o
 *.exe
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.out
+*.app
+*.stackdump
 
 # Environment variables
 .env
@@ -32,6 +50,46 @@ npm-debug.log*
 # Temporary files
 *.tmp
 .temp/
+tmp/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.py,cover
+.Python
+.python-version
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+site/
+.eggs/
+*.egg
+*.egg-info/
+pip-wheel-metadata/
+Pipfile.lock
+poetry.lock
+.ipynb_checkpoints/
+
+# C/C++ and CMake
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+cmake_install.cmake
+install_manifest.txt
+*.cmake.user
+*.dir/
 
 # Draw.io files
 *.drawio
