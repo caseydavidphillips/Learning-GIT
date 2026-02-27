@@ -47,7 +47,7 @@ jobs:
           ctest --test-dir build --output-on-failure --output-junit test-results/reelocator-unit.xml
 
       - name: Generate HTML report
-        run: python3 testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
+        run: python3 Testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
