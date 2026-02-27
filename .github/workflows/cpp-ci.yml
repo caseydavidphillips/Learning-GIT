@@ -41,17 +41,18 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.build_type }} --parallel
 
-      - name: Test (generate JUnit XML)
-        run: ctest --test-dir build --output-on-failure
-
-      - name: Generate HTML report from JUnit XML
+      - name: Test (emit JUnit XML)
         run: |
-          python3 testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
+          mkdir -p build/test-results
+          ctest --test-dir build --output-on-failure --output-junit build/test-results/reelocator-unit.xml
+
+      - name: Generate HTML report
+        run: python3 testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}
           path: |
-            build/test-results/*.xml
+            build/test-results/reelocator-unit.xml
             build/test-results/report.html

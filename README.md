@@ -15,12 +15,13 @@
 ## Testing
 
 - Unit tests are registered with CTest and run in CI via `.github/workflows/cpp-ci.yml`.
-- Test runs now produce a JUnit XML file at `build/test-results/reelocator-unit.xml` and an HTML dashboard at `build/test-results/report.html`.
+- CI exports JUnit XML to `build/test-results/reelocator-unit.xml`, runs `testing/generate_test_report.py`, and produces `build/test-results/report.html`.
 - Run locally with:
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
-ctest --test-dir build --output-on-failure
+mkdir -p build/test-results
+ctest --test-dir build --output-on-failure --output-junit build/test-results/reelocator-unit.xml
 python3 testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
 ```
