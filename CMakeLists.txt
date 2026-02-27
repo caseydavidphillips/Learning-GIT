@@ -26,4 +26,4 @@ enable_testing()
 add_executable(reelocator_unit_tests tests/ReelocatorCoreTests.cpp)
 target_link_libraries(reelocator_unit_tests PRIVATE reelocator_core)
 
-add_test(NAME reelocator_unit_tests COMMAND reelocator_unit_tests)
+add_test(NAME reelocator_unit_tests COMMAND reelocator_unit_tests --junit-out ${CMAKE_BINARY_DIR}/test-results/reelocator-unit.xml)
