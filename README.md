@@ -8,5 +8,5 @@
 
 ## New CI/CD learning resources
 
-- Step-by-step C++ GitHub Actions guide: `docs/github-actions-cpp-guide.md`
+- Step-by-step C++ GitHub Actions guide: [Project Docs](docs/github-actions-cpp-guide.md)
 - Starter workflow: `.github/workflows/cpp-ci.yml`
