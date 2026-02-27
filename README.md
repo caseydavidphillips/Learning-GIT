@@ -22,6 +22,6 @@
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
 mkdir -p build/test-results
-ctest --test-dir build --output-on-failure --output-junit build/test-results/reelocator-unit.xml
+ctest --test-dir build --output-on-failure --output-junit test-results/reelocator-unit.xml
 python3 testing/generate_test_report.py build/test-results/reelocator-unit.xml --output build/test-results/report.html
 ```
