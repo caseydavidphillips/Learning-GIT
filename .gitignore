@@ -85,7 +85,6 @@ CMakeFiles/
 CMakeCache.txt
 compile_commands.json
 CTestTestfile.cmake
-Testing/
 cmake_install.cmake
 install_manifest.txt
 *.cmake.user
@@ -99,3 +98,6 @@ install_manifest.txt
 *.drawio.pdf
 *.drawio.xml
 *.drawio.vsdx
+
+#Ignore generated report
+report.html

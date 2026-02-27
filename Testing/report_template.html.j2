@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JUnit Test Report</title>
+  <style>
+{{ base_css | safe }}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Primus &mdash; Test &amp; Coverage Report</h1>
+    <div class="meta">
+      <div><span>Report Generated</span>: {{ generated }}</div>
+      <div><span>Tag</span>: {{ tag }}</div>
+      <div><span>SHA</span>: {{ sha }}</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card" id="overall">
+      <h2>Overall</h2>
+
+      <div class="center-wrap">
+        <div class="sub-card">
+          <div class="label">Status</div>
+          <div class="badge"><div class="dot {{ overall_dot }}"></div><span id="count-status">{{ summary.overall }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Total</div>
+          <div class="badge"><span id="count-total">{{ summary.total }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Passed</div>
+          <div class="badge"><div class="dot good"></div><span id="count-passed">{{ summary.passed }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Failed</div>
+          <div class="badge"><div class="dot bad"></div><span id="count-failed">{{ summary.failed }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Errors</div>
+          <div class="badge"><div class="dot bad"></div><span id="count-errors">{{ summary.errors }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Skipped</div>
+          <div class="badge"><div class="dot warn"></div><span id="count-skipped">{{ summary.skipped }}</span></div>
+        </div>
+
+        <div class="sub-card">
+          <div class="label">Time</div>
+          <div class="badge"><span id="count-time">{{ duration }}</span></div>
+        </div>
+      </div>
+
+      <!-- centered bar wrapper .tooltip CSS) -->
+      <div class="tooltip" data-tooltip="{{ bar_tooltip }}">
+        <div class="stacked">
+          <div class="seg pass" style="width:{{ bar_pass }}%"></div>
+          <div class="seg skip" style="width:{{ bar_skip }}%"></div>
+          <div class="seg fail" style="width:{{ bar_fail }}%"></div>
+        </div>
+      </div>
+
+      {% if warnings and warnings|length > 0 %}
+      <div class="warn-block">
+        <div class="muted" style="margin-bottom: 6px;">Warnings while parsing input XML:</div>
+        <ul class="warn-list">
+          {% for w in warnings %}
+            <li>{{ w }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+	
+	    <div class="card" id="suites">
+      <h2>Suites Tested</h2>
+
+      {% if suite_rows and suite_rows|length > 0 %}
+      <div class="suite-table-wrap">
+        <table class="suite-table">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Suite</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Passed</th>
+              <th>Failed</th>
+              <th>Errors</th>
+              <th>Skipped</th>
+              <th>Time</th>
+              <th style="width: 26%;">Sources</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in suite_rows %}
+            <tr class="suite-row" data-suite="{{ s.suite_id }}">
+              <td class="suite-name-cell">
+                <span class="suite-name">{{ s.suite_name }}</span>
+              </td>
+
+              <td>
+                <span class="badge">
+                  <span class="dot {{ 'good' if s.overall == 'PASS' else 'bad' }}"></span>{{ s.overall }}
+                </span>
+              </td>
+
+              <td><span class="badge">{{ s.total }}</span></td>
+              <td><span class="badge"><span class="dot good"></span>{{ s.passed }}</span></td>
+              <td><span class="badge"><span class="dot bad"></span>{{ s.failed }}</span></td>
+              <td><span class="badge"><span class="dot bad"></span>{{ s.errors }}</span></td>
+              <td><span class="badge"><span class="dot warn"></span>{{ s.skipped }}</span></td>
+              <td><span class="badge">{{ s.duration_fmt }}</span></td>
+              <td class="suite-sources right">
+                {% if s.sources and s.sources|length > 0 %}
+                  <code>{{ s.sources|join(", ") | replace(".xml", "") }}</code>
+                {% else %}
+                  <span class="muted">—</span>
+                {% endif %}
+              </td>
+            </tr>
+
+            <tr
+              class="suite-details-row"
+              id="suite-details-{{ s.suite_id }}"
+              data-suite-details="{{ s.suite_id }}"
+              hidden
+            >
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="muted">No test suites found.</div>
+      {% endif %}
+    </div>
+
+
+    <div class="card" id="failures">
+      <h2>Failures &amp; Errors</h2>
+
+      <div class="center-wrap" style="margin-bottom: 10px;">
+        <input
+          id="fail-search"
+          placeholder="Search failures…"
+          style="
+            background: var(--panel2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 10px;
+            color: var(--text);
+            font-family: var(--sans);
+            min-width: 220px;
+          "
+        />
+
+        <div class="sub-card" data-filter="failure" style="cursor:pointer">
+          <div class="label">Failure</div>
+          <div class="badge"><div class="dot bad"></div></div>
+        </div>
+
+        <div class="sub-card" data-filter="error" style="cursor:pointer">
+          <div class="label">Error</div>
+          <div class="badge"><div class="dot bad"></div></div>
+        </div>
+      </div>
+
+      <div class="fail-empty muted" id="fail-empty" {% if bad_cases|length != 0 %}hidden{% endif %}>
+        No failures or errors
+      </div>
+
+      <div class="fail-list" id="fail-list">
+        {% for c in bad_cases %}
+        <div class="fail-item" data-kind="{{ c.kind }}">
+          <div class="fail-head">
+            <div class="fail-title">{{ c.classname }}: {{ c.test_name }}</div>
+            <div class="fail-kind badge"><div class="dot bad"></div>{{ c.kind }}</div>
+          </div>
+
+          <div class="muted" style="margin-top: 4px;">
+            {{ c.suite_name }}\{{ c.source_file }} &nbsp;•&nbsp; {{ "%.9f"|format(c.time) }}s
+          </div>
+
+          {% if c.message %}
+          <div class="fail-msg">{{ c.message }}</div>
+          {% endif %}
+
+          {% if c.details %}
+          <details class="fail-details">
+            <summary>Details</summary>
+            <pre>{{ c.details }}</pre>
+          </details>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+
+  <script>
+{{ inline_js | safe }}
+  </script>
+</body>
+</html>
