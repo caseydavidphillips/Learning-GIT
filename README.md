@@ -10,3 +10,15 @@
 
 - Step-by-step C++ GitHub Actions guide: [Project Docs](docs/github-actions-cpp-guide.md)
 - Starter workflow: `.github/workflows/cpp-ci.yml`
+
+
+## Testing
+
+- Unit tests are registered with CTest and run in CI via `.github/workflows/cpp-ci.yml`.
+- Run locally with:
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
